@@ -89,3 +89,60 @@ BlastCalendar3/
 │       └── index.html      # HTML template for the calendar view
 └── README.md               # This file
 ```
+
+## Running on Raspberry Pi (Auto-start on Boot)
+
+To make the ICS Viewer automatically start when your Raspberry Pi boots, you can create a systemd service file. These instructions assume your project is located at `/home/pi/BlastCalendar3` and you are using the standard `pi` user.
+
+1.  **Create the systemd service file:**
+
+    Use a text editor (like `nano`) to create a new service file:
+    ```bash
+    sudo nano /etc/systemd/system/blastcalendar.service
+    ```
+
+2.  **Add the following content** to the file. Adjust paths if your project location or Python version differs:
+
+    ```ini
+    [Unit]
+    Description=Blast Calendar ICS Viewer Flask App
+    After=network.target
+
+    [Service]
+    User=pi
+    WorkingDirectory=/home/pi/BlastCalendar3/ics_viewer
+    ExecStart=/home/pi/BlastCalendar3/.venv/bin/python /home/pi/BlastCalendar3/ics_viewer/app.py
+    Restart=always
+
+    [Install]
+    WantedBy=multi-user.target
+    ```
+
+    *   `Description`: A brief description of the service.
+    *   `After=network.target`: Ensures the network is up before starting.
+    *   `User=pi`: Runs the service as the `pi` user.
+    *   `WorkingDirectory`: Sets the correct directory so Flask can find templates and static files.
+    *   `ExecStart`: The full command to run the application using the Python interpreter *inside* the virtual environment.
+    *   `Restart=always`: Automatically restarts the service if it crashes.
+
+3.  **Save and close** the editor (in `nano`, press `Ctrl+X`, then `Y`, then `Enter`).
+
+4.  **Enable the service** (so it starts on boot):
+
+    ```bash
+    sudo systemctl enable blastcalendar.service
+    ```
+
+5.  **Start the service** immediately (optional, otherwise it starts on next reboot):
+
+    ```bash
+    sudo systemctl start blastcalendar.service
+    ```
+
+6.  **Check the status** (optional):
+
+    ```bash
+    sudo systemctl status blastcalendar.service
+    ```
+
+Now, the Blast Calendar viewer should start automatically whenever the Raspberry Pi boots up.
