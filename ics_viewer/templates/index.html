@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ICS Viewer - Month View</title>  <!-- Updated title -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    {% if not month_calendar_weeks %} {# Only show form/title if calendar isn't being displayed #}
+    <h1>ICS Feed Viewer</h1>
+
+    <!-- Form to enter ICS feed URL -->
+    <form id="url-form" action="{{ url_for('view_ics') }}" method="get">
+        <label for="url">ICS Feed URL:</label>
+        <input type="text" id="url" name="url" value="{{ ics_url if ics_url else '' }}" required>
+        <input type="submit" value="View Events">
+    </form>
+
+    <hr>
+    {% endif %} {# End of conditional block #}
+
+    <!-- Display error message if any -->
+    {% if error %}
+        <p class="error-message">Error: {{ error }}</p>
+    {% endif %}
+
+    {# --- Calendar Display Area (only if calendar data is available) --- #}
+    {% if month_calendar_weeks is defined and month_calendar_weeks %}
+        <div class="calendar-navigation">
+            <a href="{{ url_for('view_ics', url=ics_url, year=prev_year, month=prev_month) }}" class="nav-button prev-button">&lt; Prev</a>
+            <h2 class="current-month">{{ month_name }} {{ target_year }}</h2>
+            <a href="{{ url_for('view_ics', url=ics_url, year=next_year, month=next_month) }}" class="nav-button next-button">Next &gt;</a>
+        </div>
+
+        <div id="calendar-container">
+            <table class="calendar-table">
+                <thead>
+                    <tr>
+                        <th>Sun</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for week in month_calendar_weeks %}
+                    <tr>
+                        {% for day in week %}
+                        <td class="{% if day == 0 %}calendar-other-month{% endif %}">
+                            {% if day != 0 %}
+                                <div class="day-number">{{ day }}</div>
+                                <div class="day-events">
+                                    {# Construct date object for lookup #}
+                                    {% set current_day_date = date(target_year, target_month, day) %}
+                                    {% if current_day_date in events_by_date %}
+                                        <ul>
+                                            {% for event in events_by_date[current_day_date] %}
+                                                <li title="{{ event.summary }}\nTime: {{ event.start_str }}">
+                                                    {{ event.summary }}
+                                                    {# <small>{{ event.start_str }}</small> #} {# Uncomment to show time/All day #}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div> {# End calendar-container #}
+
+    {% elif not error and ics_url %} {# Shown if URL submitted but no calendar weeks (e.g., parsing error) #}
+        <p>Could not display calendar. Check error messages above or the console.</p>
+    {% elif not error and not ics_url %} {# Shown initially before URL is submitted #}
+        <p>Enter an ICS URL above and click "View Events".</p>
+    {% endif %}
+</body>
+</html>

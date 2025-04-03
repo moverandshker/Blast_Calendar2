@@ -1,0 +1,26 @@
+# Preliminary Rules for LLM Code Generation (Procedural Focus)
+
+## Code Structure & Logic
+
+1.  **Think Sequentially:** Break down the problem into clear, sequential steps before writing code. Ensure the code follows a logical flow from start to finish.
+2.  **Procedural Focus:** Prioritize clear, step-by-step procedures. Avoid overly complex object-oriented structures unless the problem domain clearly benefits from them.
+3.  **Single Responsibility (for Functions):** Each function should aim to perform one specific, well-defined task. If a function grows too large or handles multiple distinct tasks, decompose it into smaller, focused functions.
+
+## Code Quality & Examples
+
+4.  **Leverage Examples:** Before generating new code, check if similar code structures or examples exist within the current project or standard libraries. Adapt existing, proven patterns where appropriate rather than reinventing the wheel.
+5.  **Keep it Tight:** Write concise and efficient code. Eliminate redundancy and avoid unnecessary complexity or overly verbose logic.
+6.  **Meaningful Naming:** Use clear, descriptive, and unambiguous names for variables, functions, constants, and files. Names should indicate purpose. Avoid abbreviations or single letters unless they are standard conventions (like `i` for loop counters).
+7.  **Avoid Magic Numbers/Strings:** Define constants with descriptive names at the beginning of the file or function instead of using unexplained literal values (e.g., `MAX_ATTEMPTS = 3` instead of just `3`).
+
+## Maintainability & Robustness
+
+8.  **Error Handling:** Anticipate potential runtime errors (e.g., file access issues, invalid user input, division by zero). Implement basic checks and error handling mechanisms (like `if` checks or `try-except` blocks) to make the code more robust.
+9.  **Input Validation:** Explicitly validate inputs received by functions to ensure they meet preconditions (correct type, range, format).
+10. **Comments for Clarity:** Add comments to explain the *purpose* or *intent* behind complex or non-obvious sections of code ("why," not just "what"). Keep comments concise and up-to-date.
+11. **Consistency:** Maintain a consistent coding style (indentation, spacing, naming conventions) throughout the codebase.
+12. **Minimize Global Variables:** Limit the use of global state. Prefer passing data explicitly as function arguments and returning results.
+
+## Refactoring
+
+13. **Refactor Threshold:** Regularly review code. If a function or file exceeds a certain complexity or length (e.g., ~200 lines as a guideline), proactively consider refactoring it into smaller, more manageable, and reusable units.

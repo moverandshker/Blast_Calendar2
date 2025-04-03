@@ -1,0 +1,123 @@
+/* Basic styles for the calendar view */
+body {
+    font-family: sans-serif;
+    margin: 20px;
+}
+
+/* Styles for the input form */
+#url-form label,
+#url-form input[type="text"],
+#url-form input[type="submit"] {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#url-form input[type="text"] {
+    width: 80%; /* Adjust as needed */
+    max-width: 500px;
+    padding: 8px;
+}
+
+/* Calendar Navigation Styles */
+.calendar-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px; /* Reduced bottom margin */
+    padding: 2px 0; /* Reduced vertical padding */
+    border-bottom: 1px solid #eee;
+}
+
+.calendar-navigation h2.current-month {
+    margin: 0;
+    font-size: 1.1em; /* Reduced font size */
+}
+
+.nav-button {
+    padding: 3px 10px; /* Reduced padding */
+    text-decoration: none;
+    background-color: #e7e7e7;
+    color: #333;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    transition: background-color 0.2s ease;
+}
+
+.nav-button:hover {
+    background-color: #dcdcdc;
+}
+
+/* Calendar Table Styles */
+.calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Equal column widths */
+    margin-top: 20px;
+}
+
+.calendar-table th,
+.calendar-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    vertical-align: top;
+    overflow: hidden; /* Hide overflow initially */
+}
+
+.calendar-table th {
+    background-color: #f2f2f2;
+    text-align: center;
+    font-weight: bold;
+    padding: 4px 8px; /* Reduced vertical padding */
+}
+
+.calendar-table td {
+    height: 100px; /* Keep height for day cells */
+}
+
+.calendar-other-month {
+    background-color: #fafafa;
+}
+
+.calendar-other-month .day-number {
+    color: #aaa; /* Dim numbers for other months */
+}
+
+.day-number {
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: right;
+    margin-bottom: 5px;
+}
+
+.day-events ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.85em;
+}
+
+.day-events li {
+    margin-bottom: 3px;
+    padding: 2px 4px;
+    background-color: #e0efff; /* Light blue background for events */
+    border-radius: 3px;
+    white-space: nowrap; /* Prevent wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Show ... for long summaries */
+}
+
+/* Calendar Table and Transition */
+#calendar-container {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Error message styling */
+.error-message {
+    color: red;
+    font-weight: bold;
+    border: 1px solid red;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: #ffe0e0;
+}
