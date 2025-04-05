@@ -146,3 +146,34 @@ To make the ICS Viewer automatically start when your Raspberry Pi boots, you can
     ```
 
 Now, the Blast Calendar viewer should start automatically whenever the Raspberry Pi boots up.
+
+## Updating the Installation (on Raspberry Pi)
+
+To update your existing installation on the Raspberry Pi with the latest code from GitHub:
+
+1.  **SSH into your Raspberry Pi** and navigate to the project directory:
+    ```bash
+    cd /home/pi/BlastCalendar3 
+    ```
+
+2.  **Stop the running service** (if applicable):
+    ```bash
+    sudo systemctl stop blastcalendar.service
+    ```
+
+3.  **Pull the latest changes** from the GitHub repository:
+    ```bash
+    git pull origin master
+    ```
+    *(Or simply `git pull` if the remote tracking branch is set up).* 
+
+4.  **(Optional) Update dependencies:** Ensure your virtual environment is activated (`source .venv/bin/activate`) and run:
+    ```bash
+    pip install -r ics_viewer/requirements.txt
+    ```
+
+5.  **Restart the service:**
+    ```bash
+    sudo systemctl start blastcalendar.service
+    ```
+    *(Alternatively, reboot the Pi: `sudo reboot`)*
