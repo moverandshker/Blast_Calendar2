@@ -308,6 +308,7 @@ def view_ics():
                           events_by_date[event_date].append(formatted_event)
 
     # Get the calendar structure for the month
+    calendar.setfirstweekday(calendar.SUNDAY) # Ensure weeks start on Sunday
     month_calendar_weeks = calendar.monthcalendar(target_year, target_month)
 
     # Pass calendar structure and events to the template
